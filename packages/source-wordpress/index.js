@@ -221,6 +221,7 @@ class WordPressSource {
                 if (lazyloadClassIdx > -1) {
                   img.classNames.splice(lazyloadClassIdx, 1);
                 }
+                img.removeAttribute('data-src');
 
                 if (await fs.pathExists(filePath)) continue
 

@@ -185,8 +185,10 @@ class WordPressSource {
             if (links) {
               for (const link of html.querySelectorAll('a')) {
                 const originalLink = link.getAttribute('href')
-                const updatedLink = originalLink.replace(this.options.baseUrl, '')
-                link.setAttribute('href', updatedLink)
+                if (originalLink) {
+                  const updatedLink = originalLink.replace(this.options.baseUrl, '')
+                  link.setAttribute('href', updatedLink)
+                }
               }
             }
 

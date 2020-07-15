@@ -197,23 +197,18 @@ class WordPressSource {
             if (images) {
               const pipeline = promisify(stream.pipeline)
               for await (const img of html.querySelectorAll('img')) {
-                let srcAttr = 'src';
-                let originalSrc = img.getAttribute(srcAttr)
+                let originalSrc = img.getAttribute('src')
                 if (!originalSrc) {
-                  srcAttr = 'data-src';
-                  originalSrc = img.getAttribute(srcAttr)
+                  originalSrc = img.getAttribute('data-src')
                 }
-                let downloadAndReplaceImg = true;
-                
+
                 if (!originalSrc 
                     || (!originalSrc.includes(this.options.baseUrl) && !this.options.imageUrlsToReplace.some(url => originalSrc.includes(url)))) continue
 
                 // Map urls
                 for (const urlMap of this.options.urlMaps) {
                   if (originalSrc.includes(urlMap.from)) {
-                    console.log(`Changing url from: ${originalSrc}`);
                     originalSrc = originalSrc.replace(urlMap.from, urlMap.to);
-                    console.log(`Changing url to: ${originalSrc}`);
                   }
                 }
                 
@@ -221,7 +216,8 @@ class WordPressSource {
                 const fileUrl = pathname.replace('/wp-content', '')
                 const filePath = path.join(process.cwd(), 'static', fileUrl)
 
-                img.setAttribute(srcAttr, fileUrl)
+                img.setAttribute('src', fileUrl)
+                img.removeClass("lazyload");
 
                 if (await fs.pathExists(filePath)) continue
 

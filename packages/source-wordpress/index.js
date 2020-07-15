@@ -205,7 +205,7 @@ class WordPressSource {
                 let downloadAndReplaceImg = true;
                 
                 if (!originalSrc 
-                    || (!originalSrc.includes(this.options.baseUrl) && !imageUrlsToReplace.some(url => originalSrc.includes(url)))) continue
+                    || (!originalSrc.includes(this.options.baseUrl) && !this.options.imageUrlsToReplace.some(url => originalSrc.includes(url)))) continue
 
                 const { pathname } = new URL(originalSrc)
                 const fileUrl = pathname.replace('/wp-content', '')

@@ -55,7 +55,7 @@ class WordPressSource {
     }
 
     const baseUrl = options.baseUrl.replace(/\/$/, '')
-    const clientBase = options.hostingWPCOM ? `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}/` : `${baseUrl}/${options.apiBase}/wp/v2/`
+    const clientBase = options.hostingWPCOM ? `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}/` : `${baseUrl}/${options.apiBase}`
 
     this.options = {
       ...options,

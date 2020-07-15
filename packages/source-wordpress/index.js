@@ -209,7 +209,7 @@ class WordPressSource {
                     || (!originalSrc.includes(this.options.baseUrl) && !this.options.imageUrlsToReplace.some(url => originalSrc.includes(url)))) continue
 
                 // Map urls
-                foreach(const urlMap of this.options.urlMaps) {
+                for (const urlMap of this.options.urlMaps) {
                   if (originalSrc.includes(urlMap.from)) {
                     originalSrc.replace(urlMap.from, urlMap.to);
                   }

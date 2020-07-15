@@ -217,7 +217,7 @@ class WordPressSource {
                 const filePath = path.join(process.cwd(), 'static', fileUrl)
 
                 img.setAttribute('src', fileUrl)
-                img.removeClass("lazyload");
+                img.classList.remove("lazyload");
 
                 if (await fs.pathExists(filePath)) continue
 

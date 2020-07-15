@@ -195,14 +195,19 @@ class WordPressSource {
             if (images) {
               const pipeline = promisify(stream.pipeline)
               for await (const img of html.querySelectorAll('img')) {
-                const originalSrc = img.getAttribute('src')
-                if (!originalSrc.includes(this.options.baseUrl)) continue
+                let srcAttr = 'src';
+                let originalSrc = img.getAttribute(srcAttr)
+                if (!originalSrc) {
+                  srcAttr = 'data-src';
+                  originalSrc = img.getAttribute(srcAttr)
+                }
+                if (!originalSrc || !originalSrc.includes(this.options.baseUrl)) continue
 
                 const { pathname } = new URL(originalSrc)
                 const fileUrl = pathname.replace('/wp-content', '')
                 const filePath = path.join(process.cwd(), 'static', fileUrl)
 
-                img.setAttribute('src', fileUrl)
+                img.setAttribute(srcAttr, fileUrl)
 
                 if (await fs.pathExists(filePath)) continue
 

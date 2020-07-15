@@ -31,7 +31,8 @@ class WordPressSource {
       typeName: 'WordPress',
       images: false,
       content: true,
-      imageUrlsToReplace: []
+      imageUrlsToReplace: [],
+      urlMaps: []
     }
   }
 
@@ -207,6 +208,13 @@ class WordPressSource {
                 if (!originalSrc 
                     || (!originalSrc.includes(this.options.baseUrl) && !this.options.imageUrlsToReplace.some(url => originalSrc.includes(url)))) continue
 
+                // Map urls
+                foreach(const urlMap of this.options.urlMaps) {
+                  if (originalSrc.includes(urlMap.from)) {
+                    originalSrc.replace(urlMap.from, urlMap.to);
+                  }
+                }
+                
                 const { pathname } = new URL(originalSrc)
                 const fileUrl = pathname.replace('/wp-content', '')
                 const filePath = path.join(process.cwd(), 'static', fileUrl)

@@ -211,7 +211,9 @@ class WordPressSource {
                 // Map urls
                 for (const urlMap of this.options.urlMaps) {
                   if (originalSrc.includes(urlMap.from)) {
+                    console.log(`Changing url from: ${originalSrc}`);
                     originalSrc = originalSrc.replace(urlMap.from, urlMap.to);
+                    console.log(`Changing url to: ${originalSrc}`);
                   }
                 }
                 

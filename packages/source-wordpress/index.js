@@ -217,7 +217,10 @@ class WordPressSource {
                 const filePath = path.join(process.cwd(), 'static', fileUrl)
 
                 img.setAttribute('src', fileUrl)
-                img.classList.remove("lazyload");
+                const lazyloadClassIdx = img.classNames.indexOf('lazyload');
+                if (lazyloadClassIdx > -1) {
+                  img.classNames.splice(lazyloadClassIdx, 1);
+                }
 
                 if (await fs.pathExists(filePath)) continue
 

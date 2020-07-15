@@ -30,7 +30,8 @@ class WordPressSource {
       concurrent: os.cpus().length,
       typeName: 'WordPress',
       images: false,
-      content: true
+      content: true,
+      imageUrlsToReplace: []
     }
   }
 
@@ -201,7 +202,10 @@ class WordPressSource {
                   srcAttr = 'data-src';
                   originalSrc = img.getAttribute(srcAttr)
                 }
-                if (!originalSrc || !originalSrc.includes(this.options.baseUrl)) continue
+                let downloadAndReplaceImg = true;
+                
+                if (!originalSrc 
+                    || (!originalSrc.includes(this.options.baseUrl) && !imageUrlsToReplace.some(url => originalSrc.includes(url)))) continue
 
                 const { pathname } = new URL(originalSrc)
                 const fileUrl = pathname.replace('/wp-content', '')

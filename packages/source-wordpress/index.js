@@ -225,11 +225,15 @@ class WordPressSource {
 
                 if (await fs.pathExists(filePath)) continue
 
-                await fs.ensureFile(filePath)
-                await pipeline(
-                  got.stream(originalSrc),
-                  fs.createWriteStream(filePath)
-                )
+                try {
+                  await fs.ensureFile(filePath)
+                  await pipeline(
+                    got.stream(originalSrc),
+                    fs.createWriteStream(filePath)
+                  )
+                } catch (err) {
+                  report.error(`Failed to load image ${originalSrc}`);
+                }
               }
             }
 

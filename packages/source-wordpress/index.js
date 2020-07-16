@@ -74,6 +74,12 @@ class WordPressSource {
       responseType: 'json'
     })
 
+    this.client.on('error', error => 
+    {
+      report.error(error)
+      report.error(error.code)
+    });
+
     api.loadSource(async actions => {
       this.store = actions
 
@@ -225,15 +231,11 @@ class WordPressSource {
 
                 if (await fs.pathExists(filePath)) continue
 
-                try {
-                  await fs.ensureFile(filePath)
-                  await pipeline(
-                    got.stream(originalSrc),
-                    fs.createWriteStream(filePath)
-                  )
-                } catch (err) {
-                  report.error(`Failed to load image ${originalSrc}`);
-                }
+                await fs.ensureFile(filePath)
+                await pipeline(
+                  got.stream(originalSrc),
+                  fs.createWriteStream(filePath)
+                )
               }
             }
 

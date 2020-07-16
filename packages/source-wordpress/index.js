@@ -184,6 +184,7 @@ class WordPressSource {
             const html = HTMLParser.parse(fields[key])
             if (!html) continue
 
+            // Process links
             if (links) {
               for (const link of html.querySelectorAll('a')) {
                 const originalLink = link.getAttribute('href')
@@ -193,7 +194,7 @@ class WordPressSource {
                 }
               }
             }
-
+            // Process images
             if (images) {
               const pipeline = promisify(stream.pipeline)
               for await (const img of html.querySelectorAll('img')) {
@@ -230,6 +231,21 @@ class WordPressSource {
                   got.stream(originalSrc),
                   fs.createWriteStream(filePath)
                 )
+              }
+            }
+            // Process videos
+            for await (const video of html.querySelectorAll('video')) {
+              // Remove lazy class
+              const lazyloadClassIdx = video.classNames.indexOf('lazy');
+              if (lazyloadClassIdx > -1) {
+                video.classNames.splice(lazyloadClassIdx, 1);
+              }
+              // Change video data-src to src
+              const videoSource = video.querySelector('source');
+              if (videoSource) {
+                const videoUrl = videoSource.getAttribute('data-src');
+                videoSource.removeAttribute('data-src');
+                videoUrl = videoSource.setAttribute('src', videoUrl);
               }
             }
 

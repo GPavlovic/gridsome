@@ -74,12 +74,6 @@ class WordPressSource {
       responseType: 'json'
     })
 
-    this.client.on('error', error => 
-    {
-      report.error(error)
-      report.error(error.code)
-    });
-
     api.loadSource(async actions => {
       this.store = actions
 

@@ -250,6 +250,10 @@ class WordPressSource {
                 }
               }
             }
+            // Process icons
+            for await (const icon of html.querySelectorAll('i.comp-fa-icon')) {
+              icon.set_content(`<font-awesome-icon :icon="['fas', 'bullhorn']" />`);
+            }
 
             fields[key] = html.toString()
           }

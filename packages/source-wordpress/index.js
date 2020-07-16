@@ -244,7 +244,7 @@ class WordPressSource {
               const videoSource = video.querySelector('source');
               if (videoSource) {
                 const videoUrl = videoSource.getAttribute('data-src');
-                if () {
+                if (videoUrl) {
                   videoSource.removeAttribute('data-src');
                   videoSource.setAttribute('src', videoUrl);
                 }

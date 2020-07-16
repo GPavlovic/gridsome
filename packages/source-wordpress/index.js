@@ -244,8 +244,10 @@ class WordPressSource {
               const videoSource = video.querySelector('source');
               if (videoSource) {
                 const videoUrl = videoSource.getAttribute('data-src');
-                videoSource.removeAttribute('data-src');
-                videoSource.setAttribute('src', videoUrl);
+                if () {
+                  videoSource.removeAttribute('data-src');
+                  videoSource.setAttribute('src', videoUrl);
+                }
               }
             }
 
